@@ -1,4 +1,4 @@
-<div class="mp-gig-top-nav">
+  <div class="mp-gig-top-nav">
   <nav>
     <ul class="container text-center" id="mainNav">
 

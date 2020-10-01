@@ -12,7 +12,7 @@
 	}
 ?>
 <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
-	<a href="<?= $site_url; ?>/proposals/<?= $seller_user_name; ?>/<?= $proposal_url; ?>">
+	<a href="<?= $site_url; ?>proposals/<?= $seller_user_name; ?>/<?= $proposal_url; ?>">
 		<img src="<?= $proposal_img1; ?>" class="img-fluid">
 	</a>
 	<div class="proposal-card-caption"><!--- proposal-card-caption Starts --->

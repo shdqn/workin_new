@@ -30,18 +30,18 @@
 
     <?php if(empty($d_proposal_img2)){ ?>
     <div class="pic">
-      <i class="fa fa-picture-o fa-2x mb-2"></i><br> <span><?= $lang['proposals']['browse_image/audio']; ?></span>
+      <i class="fa fa-picture-o fa-2x mb-2"></i><br> <span><?= $lang['proposals']['browse_image']; ?></span>
       <input type="hidden" name="proposal_img2" value="">
       <input type="hidden" name="proposal_img2_s3" value="<?= $d_proposal_img2_s3; ?>">
     </div>
     <?php }else{ ?>
     <div class="img">
       
-      <?php if($img_2_extension == "mp3" or $img_2_extension = "wav"){ ?>
+      <!-- <?php if($img_2_extension == "mp3" or $img_2_extension = "wav"){ ?>
         <img src="proposal_files/audio.jpg" class='img-fluid'>
-      <?php }else{ ?>
+      <?php }else{ ?> -->
         <img src="<?= getImageUrl2("proposals","proposal_img2",$d_proposal_img2); ?>" class='img-fluid' alt="">
-      <?php } ?>
+      <!-- <?php } ?> -->
 
       <span><?= $lang['proposals']['remove']; ?></span>
       <input type="hidden" name="proposal_img2" value="<?= $d_proposal_img2; ?>">
@@ -54,18 +54,18 @@
     <div class="col-md-3"><!--- col-md-3 Starts --->
     <?php if(empty($d_proposal_img3)){ ?>
     <div class="pic">
-    <i class="fa fa-picture-o fa-2x mb-2"></i><br> <span><?= $lang['proposals']['browse_image/audio']; ?></span>
+    <i class="fa fa-picture-o fa-2x mb-2"></i><br> <span><?= $lang['proposals']['browse_image']; ?></span>
     <input type="hidden" name="proposal_img3" value="">
     <input type="hidden" name="proposal_img3_s3" value="<?= $d_proposal_img3_s3; ?>">
     </div>
     <?php }else{ ?>
     <div class="img">
       
-      <?php if($img_3_extension == "mp3" or $img_3_extension = "wav"){ ?>
+      <!-- <?php if($img_3_extension == "mp3" or $img_3_extension = "wav"){ ?>
         <img src="proposal_files/audio.jpg" class='img-fluid'>
-      <?php }else{ ?>
+      <?php }else{ ?> -->
         <img src="<?= getImageUrl2("proposals","proposal_img3",$d_proposal_img3); ?>" class='img-fluid' alt="">
-      <?php } ?>
+      <!-- <?php } ?> -->
 
       <span><?= $lang['proposals']['remove']; ?></span>
       <input type="hidden" name="proposal_img3" value="<?= $d_proposal_img3; ?>">
@@ -77,18 +77,18 @@
     <div class="col-md-3"><!--- col-md-3 Starts --->
     <?php if(empty($d_proposal_img4)){ ?>
     <div class="pic">
-      <i class="fa fa-picture-o fa-2x mb-2"></i><br> <span><?= $lang['proposals']['browse_image/audio']; ?></span>
+      <i class="fa fa-picture-o fa-2x mb-2"></i><br> <span><?= $lang['proposals']['browse_image']; ?></span>
       <input type="hidden" name="proposal_img4" value="">
       <input type="hidden" name="proposal_img3_s3" value="<?= $d_proposal_img3_s3; ?>">
     </div>
     <?php }else{ ?>
     <div class="img">
 
-      <?php if($img_4_extension == "mp3" or $img_4_extension = "wav"){ ?>
-        <img src="proposal_files/audio.jpg" class='img-fluid'>
-      <?php }else{ ?>
+      <!-- <?php if($img_4_extension == "mp3" or $img_4_extension = "wav"){ ?>
+        <img src="proposal_files/audio.png" class='img-fluid'>
+      <?php }else{ ?> -->
         <img src="<?= getImageUrl2("proposals","proposal_img4",$d_proposal_img4); ?>" class='img-fluid' alt="">
-      <?php } ?>
+      <!-- <?php } ?> -->
 
       <span><?= $lang['proposals']['remove']; ?></span>
       <input type="hidden" name="proposal_img4" value="<?= $d_proposal_img4; ?>">

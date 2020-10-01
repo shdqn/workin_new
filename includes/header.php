@@ -51,6 +51,8 @@ if(!isset($_COOKIE['close_announcement']) OR @$_COOKIE['close_announcement'] != 
 ?>
 <link href="<?= $site_url; ?>/styles/scoped_responsive_and_nav.css" rel="stylesheet">
 <link href="<?= $site_url; ?>/styles/vesta_homepage.css" rel="stylesheet">
+<script src='https://www.google.com/recaptcha/api.js'></script>
+
 
 <div id="gnav-header" class="gnav-header global-nav clear gnav-3">
   <header id="gnav-header-inner" class="gnav-header-inner clear apply-nav-height col-group has-svg-icons body-max-width">
@@ -266,16 +268,12 @@ if(!isset($_COOKIE['close_announcement']) OR @$_COOKIE['close_announcement'] != 
         <hr class="">
         <div class="line mt-3"><span></span></div>
         <div class="text-center">
-          <?php if(!empty($fb_app_id) & !empty($fb_app_secret)){ ?>
-          <a href="#" onclick="window.location = '<?= $fLoginURL ?>';" class="btn btn-primary btn-fb-connect" >
+          <!-- <a href="#" onclick="window.location = '<?= $fLoginURL ?>';" class="btn btn-primary btn-fb-connect" >
           <i class="fa fa-facebook"></i> FACEBOOK
-          </a>
-          <?Php } ?>
-          <?php if(!empty($g_client_id) & !empty($g_client_secret)){ ?>
+          </a> -->
           <a href="#" onclick="window.location = '<?= $gLoginURL ?>';" class="btn btn-danger btn-gplus-connect " >
-          <i class="fa fa-google"></i> GOOGLE
+          <i class="fa fa-google-plus"></i> GOOGLE
           </a>
-          <?php } ?>
         </div>
         <div class="clearfix"></div>
         <?php } ?>
@@ -333,8 +331,11 @@ if(!isset($_COOKIE['close_announcement']) OR @$_COOKIE['close_announcement'] != 
             <label class="form-group-label"> <?= $lang['label']['password']; ?></label>
             <input type="password" class="form-control" name="seller_pass" placeholder="<?= $lang['placeholder']['password']; ?>" required="">
           </div>
+          
+          <!-- <div class="g-recaptcha" data-sitekey="6LeUBMoZAAAAAFd94DeMWJGLX_vH6dnaZe_F1XxM"> </div> <br> -->
 
           <input type="submit" name="login" class="btn btn-success btn-block" value="<?= $lang['button']['login_now']; ?>">
+          <hr>
         </form>
         <?php if($enable_social_login == "yes"){ ?>
         <div class="clearfix"></div>
@@ -342,19 +343,12 @@ if(!isset($_COOKIE['close_announcement']) OR @$_COOKIE['close_announcement'] != 
         <hr class="">
         <div class="line mt-3"><span></span></div>
         <div class="text-center">
-
-          <?php if(!empty($fb_app_id) & !empty($fb_app_secret)){ ?>
-          <a href="#" onclick="window.location = '<?= $fLoginURL ?>';" class="btn btn-primary btn-fb-connect">
-            <i class="fa fa-facebook"></i> FACEBOOK
+          <!-- <a href="#" onclick="window.location = '<?= $fLoginURL ?>';" class="btn btn-primary btn-fb-connect" >
+          <i class="fa fa-facebook"></i> FACEBOOK
+          </a> -->
+          <a href="#" onclick="window.location = '<?= $gLoginURL ?>';" class="btn btn-danger btn-gplus-connect " >
+          <i class="fa fa-google-plus"></i> GOOGLE
           </a>
-          <?php } ?>
-
-          <?php if(!empty($g_client_id) & !empty($g_client_secret)){ ?>
-          <a href="#" onclick="window.location = '<?= $gLoginURL ?>';" class="btn btn-danger btn-gplus-connect">
-            <i class="fa fa-google"></i> GOOGLE
-          </a>
-          <?php } ?>
-
         </div>
         <div class="clearfix"></div>
         <?php } ?>

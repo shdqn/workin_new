@@ -217,6 +217,9 @@ if($videoPlugin == 1){
 }
 
 $show_img1 = getImageUrl2("proposals","proposal_img1",$proposal_img1);
+$show_img2 = getImageUrl2("proposals","proposal_img2",$proposal_img2);
+$show_img3 = getImageUrl2("proposals","proposal_img3",$proposal_img3);
+$show_img4 = getImageUrl2("proposals","proposal_img4",$proposal_img4);
 
 ?>
 <!DOCTYPE html>
@@ -288,6 +291,9 @@ echo '<link href="../../styles/desktop_proposals.css" rel="stylesheet">';
 			<div class="modal-body text-center"><!-- modal-body p-0 Starts -->
 				
 				<img src="<?= $show_img1; ?>" class='img-fluid'>
+				<img src="<?= $show_img2; ?>" class='img-fluid'>
+				<img src="<?= $show_img3; ?>" class='img-fluid'>
+				<img src="<?= $show_img4; ?>" class='img-fluid'>
 
 			</div><!-- modal-body p-0 Ends -->
 		</div><!-- modal-content Ends -->

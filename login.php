@@ -23,7 +23,6 @@ if(isset($_SESSION['seller_user_name'])){
 	<meta name="description" content="Login or register for an account on <?= $site_name; ?>, a fast growing freelance marketplace, where sellers provide their services at extremely affordable prices.">
 	<meta name="keywords" content="<?= $site_keywords; ?>">
 	<meta name="author" content="<?= $site_author; ?>">
-
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100" rel="stylesheet">
 	<link href="styles/bootstrap.css" rel="stylesheet">
    <link href="styles/custom.css" rel="stylesheet"> <!-- Custom css code from modified in admin panel --->
@@ -35,6 +34,8 @@ if(isset($_SESSION['seller_user_name'])){
    <script type="text/javascript" src="js/ie.js"></script>
    <script type="text/javascript" src="js/sweat_alert.js"></script>
 	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<!-- Load Librari Google reCaptcha nya -->
+	<script src='https://www.google.com/recaptcha/api.js'></script>
 
 	<?php if(!empty($site_favicon)){ ?>
    	<link rel="shortcut icon" href="<?= $site_favicon; ?>" type="image/x-icon">
@@ -77,7 +78,7 @@ if(isset($_SESSION['seller_user_name'])){
 				</div><!--- alert alert-danger Ends --->
 				<?php } ?>
 
-				<form action="" method="post">
+				<form action="g-capcha.php" method="post">
 
 					<div class="form-group">
 
@@ -92,6 +93,8 @@ if(isset($_SESSION['seller_user_name'])){
 	            </div>
 
 	            <div class="form-group">
+
+						<div class="g-recaptcha" data-sitekey="6LeUBMoZAAAAAFd94DeMWJGLX_vH6dnaZe_F1XxM"></div>
 
 						<input type="submit" name="access" class="btn btn-success btn-block" value="<?= $lang['button']['login']; ?>" required>
 				
@@ -108,18 +111,17 @@ if(isset($_SESSION['seller_user_name'])){
 
 				<div class="text-center">
 
+				<!-- <a href="#" onclick="window.location='<?= $fLoginURL ?>';" class="btn btn-primary text-white" >
 
-				<?php if(!empty($fb_app_id) & !empty($fb_app_secret)){ ?>
-				<a href="#" onclick="window.location='<?= $fLoginURL ?>';" class="btn btn-primary text-white" >
-					<i class="fa fa-facebook"></i> FACEBOOK
-				</a>
-				<?php } ?>
-					
-				<?php if(!empty($g_client_id) & !empty($g_client_secret)){ ?>
+				<i class="fa fa-facebook"></i> FACEBOOK
+
+				</a> -->
+
 				<a href="#" onclick="window.location = '<?= $gLoginURL ?>';" class="btn btn-danger text-white">
-					<i class="fa fa-google"></i> GOOGLE
+
+				<i class="fa fa-google-plus"></i> GOOGLE
+
 				</a>
-				<?php } ?>
 				
 				</div>			
 
