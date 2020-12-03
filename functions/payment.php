@@ -779,4 +779,83 @@ function paystack_execute(){
 }
 /// Paystack Payment Code Ends ////
 
+
+/// Midtrans Payment Code Start ////
+
+public function midtrans($data){
+  
+
+  global $db;
+  global $dir;
+  global $site_url;
+
+  $this->insert_temp_order($data,"","midtrans");
+
+  $get_payment_settings = $db->select("payment_settings");
+  $row_payment_settings = $get_payment_settings->fetch();
+  $enable_midtrans = $row_payment_settings->enable_midtrans;
+  $midtrans_public_key = $row_payment_settings->midtrans_public_key;
+  $midtrans_secret_key = $row_payment_settings->midtrans_secret_key;
+
+  $login_seller_user_name = $_SESSION['seller_user_name'];
+  $select_login_seller = $db->select("sellers",array("seller_user_name" => $login_seller_user_name));
+  $row_login_seller = $select_login_seller->fetch();
+  $login_seller_id = $row_login_seller->seller_id;
+  $login_seller_email = $row_login_seller->seller_email;
+
+  // if(!isset($data['qty'])){
+  //   $data['qty'] = 1;
+  // }
+
+  // SDK de Midtrans
+  require_once dirname(__FILE__) . 'vendor/midtrans/midtrans-php/Midtrans.php';
+
+  // set server key
+  \Midtrans\Config::$serverKey = $midtrans_secret_key;
+
+  // Uncoment for production enviroment
+  // \Midtrans\Config::$isProduction = true;
+
+  // Enable sanitization
+  \Midtrans\Config::$isSanitized = true;
+
+  // Enable 3D-Secure
+  \Midtrans\Config::$is3ds = true;
+
+
+  $params = array(
+    'transaction_details' => array(
+      'order_id' => rand(),
+      'gross_amount' => 10000,
+    ),
+    'customer_details' => array(
+      'first_name' => 'suhail',
+      'last_name' => 'shah',
+      'email' => 'suhail@gmail.com',
+      'phone' => '08294364636'
+    ),
+
+  );
+
+  $snapToken = \Midtrans\Snap::getSnapToken($params);
+
+}
+
+
+public function midtrans_execute(){
+
+  global $db;
+  global $input;
+  global $site_url;
+
+  $login_seller_user_name = $_SESSION['seller_user_name'];
+  $select_login_seller = $db->select("sellers",array("seller_user_name" => $login_seller_user_name));
+  $row_login_seller = $select_login_seller->fetch();
+  $login_seller_id = $row_login_seller->seller_id;
+
+  $reference_no = $input->get("reference_no");
+  return $this->execute_payment($reference_no,"midtrans");
+
+}
+
 }

@@ -10,6 +10,36 @@ if(isset($_SESSION['admin_email'])){
 
 $_SESSION['adminLanguage'] = 1;
 
+
+
+if(isset($_POST['admin_login'])) {
+	// print_r($_POST);
+	$url = "https://www.google.com/recaptcha/api/siteverify";
+	$data = [
+		'secret' => "6Lfd4-AZAAAAAFOm468xb7gnKunT7EoQq7HCtMAC",
+		'response' => $_POSTp['token'],
+		'remoteip' => $_SERVER['REMOTE_ADDR']
+	];
+
+	$option = array(
+		'http' => array(
+			'header' => "Content-type: application/
+				x-www-form-urlencoded\r\n",
+			'method' => 'POST',
+			'content' => http_build_query($data)
+		)
+	);
+
+	$context = stream_context_create($option);
+	$response = file_get_contents($url, false, $context);
+
+	$res = json_encode($response, true);
+	if ($res['success'] == true) {
+		echo "recaptcha berhasil";
+	} else {
+		echo "gagal recaptcha";
+	}
+}
 ?>
 
 <!DOCTYPE html>
@@ -49,6 +79,8 @@ $_SESSION['adminLanguage'] = 1;
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 
     <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
+    <script src="https://www.google.com/recaptcha/
+	  api.js?render=6Lfd4-AZAAAAANmM4vzbC1sU5LndGKKp_wsabL-T"></script>
     
     <style>
         
@@ -168,6 +200,15 @@ $_SESSION['adminLanguage'] = 1;
 <script src="assets/js/plugins.js"></script>
 
 </body>
+<script>
+	grecaptcha.ready(function() {
+		grecaptcha.execute('6Lfd4-AZAAAAANmM4vzbC1sU5LndGKKp_wsabL-T', {
+			action: 'homepage'}).then(function(token) {
+				console.log(token);
+				document.getElementById("token").value = token;
+			});
+	});
+	</script>
 
 </html>
 

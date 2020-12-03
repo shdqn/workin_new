@@ -49,6 +49,32 @@
 </form>
 <?php } ?>
 
+<?php if($enable_midtrans == "yes"){ ?>
+<form action="midtrans_charge" method="post" id="midtrans-form"><!--- paypal-form Starts --->
+	<button type="submit" id="pay-button" name="midtrans" class="btn btn-lg btn-success btn-block"><?= $lang['button']['pay_with_midtrans']; ?></button>
+</form>
+<?php } ?>
+
+<script type="text/javascript">
+            document.getElementById('pay-button').onclick = function(){
+                // SnapToken acquired from previous step
+                snap.pay('<?php echo $snapToken?>', {
+                    // Optional
+                    onSuccess: function(result){
+                        /* You may add your own js here, this is just example */ document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                    },
+                    // Optional
+                    onPending: function(result){
+                        /* You may add your own js here, this is just example */ document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                    },
+                    // Optional
+                    onError: function(result){
+                        /* You may add your own js here, this is just example */ document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                    }
+                });
+            };
+        </script>
+
 <?php 
 
 	if($enable_dusupay == "yes"){

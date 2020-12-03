@@ -58,6 +58,9 @@
 	}
 
 	$enable_paystack = $row_payment_settings->enable_paystack;
+	$enable_midtrans = $row_payment_settings->enable_midtrans;
+	$midtrans_public_key = $row_payment_settings->midtrans_public_key;
+	$midtrans_secret_key = $row_payment_settings->midtrans_secret_key; 
 
 	$login_seller_user_name = $_SESSION['seller_user_name'];
 	$select_login_seller = $db->select("sellers",array("seller_user_name" => $login_seller_user_name));
@@ -183,6 +186,13 @@
 
 <!-- Include the PayPal JavaScript SDK -->
 <script src="https://www.paypal.com/sdk/js?client-id=<?= $paypal_client_id; ?>&commit=true&disable-funding=credit,card"></script>
+
+<!-- midtrans javascript -->
+<script 
+      type="text/javascript"
+      src="https://app.sandbox.midtrans.com/snap/snap.js"
+      data-client-key="<?= $midtrans_public_key ?>"
+    ></script>
 
 <?php if(!empty($site_favicon)){ ?>
 <link rel="shortcut icon" href="<?= $site_favicon; ?>" type="image/x-icon">
@@ -440,7 +450,28 @@ if(isset($_POST['code'])){
 									<img src="images/mobile-money.png" height="50" class="ml-2 width-xs-100">
 								</div>
 							</div>
-            			<?php } ?>
+						<?php } ?>
+						
+						<?php if($enable_midtrans == "yes"){ ?>
+							<?php if($enable_paypal == "yes" or $enable_stripe == "yes" or $enable_2checkout == "yes" or $enable_mercadopago == "1" or $enable_coinpayments == "yes" or $enable_paystack == "yes"){ ?>
+							<hr>
+							<?php } ?>
+							<div class="row">
+							<div class="col-1">
+							<input id="midtrans" type="radio" name="method" class="form-control radio-input"
+							<?php
+							if($current_balance < $sub_total){
+							if($enable_paypal == "no" and $enable_stripe == "no" and $enable_2checkout == "no" and $enable_mercadopago == "0" and $enable_coinpayments == "no" and $enable_paystack == "no"){ 
+							echo "checked";
+							}
+							}
+							?>>
+							</div>
+							<div class="col-11">
+							<img src="images/midtrans.png" height="50" class="ml-2 width-xs-100">
+							</div>
+							</div>
+							<?php } ?>
 						</div>
 					</div>
 				</div>
@@ -600,6 +631,7 @@ $('#shopping-balance').click(function(){
 	$('#mercadopago-form').hide();
 	$('#paypal-form').hide();
 	$('#shopping-balance-form').show();
+	$('#midtrans-form').hide();
 });
 $('#paypal').click(function(){
 	$('.total-price').html('<?= showPrice($total); ?>');
@@ -612,6 +644,7 @@ $('#paypal').click(function(){
 	$('#coinpayments-form').hide();
 	$('#paystack-form').hide();
 	$('#mercadopago-form').hide();
+	$('#midtrans-form').hide();
 });
 $('#credit-card').click(function(){
 	$('.total-price').html('<?= showPrice($total); ?>');
@@ -624,6 +657,7 @@ $('#credit-card').click(function(){
 	$('#coinpayments-form').hide();
 	$('#paystack-form').hide();
 	$('#mercadopago-form').hide();
+	$('#midtrans-form').hide();
 });
 $('#2checkout').click(function(){
 	$('.total-price').html('<?= showPrice($total); ?>');
@@ -636,6 +670,7 @@ $('#2checkout').click(function(){
 	$('#coinpayments-form').hide();
 	$('#paystack-form').hide();
 	$('#mercadopago-form').hide();
+	$('#midtrans-form').hide();
 });
 $('#mobile-money').click(function(){
 	$('.total-price').html('<?= showPrice($total); ?>');
@@ -648,6 +683,7 @@ $('#mobile-money').click(function(){
 	$('#coinpayments-form').hide();
 	$('#paystack-form').hide();
 	$('#mercadopago-form').hide();
+	$('#midtrans-form').hide();
 });
 $('#coinpayments').click(function(){
 	$('.total-price').html('<?= showPrice($total); ?>');
@@ -659,7 +695,8 @@ $('#coinpayments').click(function(){
 	$('#coinpayments-form').show();
 	$('#paystack-form').hide();
 	$('#paypal-form').hide();
-	$('#shopping-balance-form').hide();
+	$('#shopping-balance-form').hide();	
+	$('#midtrans-form').hide();
 });
 $('#paystack').click(function(){
 	$('.total-price').html('<?= showPrice($total); ?>');
@@ -670,6 +707,20 @@ $('#paystack').click(function(){
 	$('#2checkout-form').hide();
 	$('#coinpayments-form').hide();
 	$('#paystack-form').show();
+	$('#paypal-form').hide();
+	$('#shopping-balance-form').hide();
+	$('#midtrans-form').hide();
+});
+$('#midtrans').click(function(){
+	$('.total-price').html('<?= showPrice($total); ?>');
+	$('.processing-fee').show();
+	$('#mercadopago-form').hide();
+	$('#mobile-money-form').hide();
+	$('#credit-card-form').hide();
+	$('#2checkout-form').hide();
+	$('#coinpayments-form').hide();
+	$('#paystack-form').hide();
+	$('#midtrans-form').show();
 	$('#paypal-form').hide();
 	$('#shopping-balance-form').hide();
 });
@@ -684,6 +735,7 @@ $('#mercadopago').click(function(){
 	$('#paystack-form').hide();
 	$('#paypal-form').hide();
 	$('#shopping-balance-form').hide();
+	$('#midtrans-form').hide();
 });
 });
 </script>

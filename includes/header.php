@@ -46,12 +46,43 @@ $ip = get_real_user_ip();
 
 if(!isset($_COOKIE['close_announcement']) OR @$_COOKIE['close_announcement'] != $bar_last_updated){
   include("comp/announcement_bar.php");
+  
+}
+
+if(isset($_POST['login'])) {
+	// print_r($_POST);
+	$url = "https://www.google.com/recaptcha/api/siteverify";
+	$data = [
+		'secret' => "6Lfd4-AZAAAAAFOm468xb7gnKunT7EoQq7HCtMAC",
+		'response' => $_POSTp['token'],
+		'remoteip' => $_SERVER['REMOTE_ADDR']
+	];
+
+	$option = array(
+		'http' => array(
+			'header' => "Content-type: application/
+				x-www-form-urlencoded\r\n",
+			'method' => 'POST',
+			'content' => http_build_query($data)
+		)
+	);
+
+	$context = stream_context_create($option);
+	$response = file_get_contents($url, false, $context);
+
+	$res = json_encode($response, true);
+	if ($res['success'] == true) {
+		echo "recaptcha berhasil";
+	} else {
+		echo "gagal recaptcha";
+	}
 }
 
 ?>
 <link href="<?= $site_url; ?>/styles/scoped_responsive_and_nav.css" rel="stylesheet">
 <link href="<?= $site_url; ?>/styles/vesta_homepage.css" rel="stylesheet">
-<script src='https://www.google.com/recaptcha/api.js'></script>
+<script src="https://www.google.com/recaptcha/
+	api.js?render=6Lfd4-AZAAAAANmM4vzbC1sU5LndGKKp_wsabL-T"></script>
 
 
 <div id="gnav-header" class="gnav-header global-nav clear gnav-3">
@@ -322,19 +353,18 @@ if(!isset($_COOKIE['close_announcement']) OR @$_COOKIE['close_announcement'] != 
           });
         </script>
         <?php } ?>
-        <form action="" method="post">
+        <form action="" method="post">  
           <div class="form-group">
             <label class="form-group-label"> <?= $lang['label']['username']; ?></label>
-            <input type="text" class="form-control" name="seller_user_name" placeholder="<?= $lang['placeholder']['username_or_email']; ?>"  value= "<?php if(isset($_SESSION['seller_user_name'])) echo $_SESSION['seller_user_name']; ?>" required="">
+            <input type="text" class="form-control" name="seller_user_name" id="username" placeholder="<?= $lang['placeholder']['username_or_email']; ?>"  value= "<?php if(isset($_SESSION['seller_user_name'])) echo $_SESSION['seller_user_name']; ?>" required="">
           </div>
           <div class="form-group">
             <label class="form-group-label"> <?= $lang['label']['password']; ?></label>
-            <input type="password" class="form-control" name="seller_pass" placeholder="<?= $lang['placeholder']['password']; ?>" required="">
+            <input type="password" class="form-control" name="seller_pass" id="password" placeholder="<?= $lang['placeholder']['password']; ?>" required="">
           </div>
           
-          <!-- <div class="g-recaptcha" data-sitekey="6LeUBMoZAAAAAFd94DeMWJGLX_vH6dnaZe_F1XxM"> </div> <br> -->
 
-          <input type="submit" name="login" class="btn btn-success btn-block" value="<?= $lang['button']['login_now']; ?>">
+          <input type="submit" name="login" id="submit" class="btn btn-success btn-block" value="<?= $lang['button']['login_now']; ?>">
           <hr>
         </form>
         <?php if($enable_social_login == "yes"){ ?>
@@ -399,6 +429,16 @@ if(!isset($_COOKIE['close_announcement']) OR @$_COOKIE['close_announcement'] != 
     </div>
   </div>
 </div><!-- Forgot password ends -->
+
+<script>
+	grecaptcha.ready(function() {
+		grecaptcha.execute('6Lfd4-AZAAAAANmM4vzbC1sU5LndGKKp_wsabL-T', {
+			action: 'homepage'}).then(function(token) {
+				console.log(token);
+				document.getElementById("token").value = token;
+			});
+	});
+	</script>
 
 <?php require_once("register_login_forgot.php"); ?>
 <?php require_once("external_stylesheet.php"); ?>

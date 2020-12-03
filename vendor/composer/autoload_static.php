@@ -46,6 +46,7 @@ class ComposerStaticInitd77f9f9e6c9fdd342ae4a499e78bd79b
         ),
         'M' => 
         array (
+            'Midtrans\\' => 9,
             'MercadoPago\\' => 12,
         ),
         'J' => 
@@ -132,6 +133,10 @@ class ComposerStaticInitd77f9f9e6c9fdd342ae4a499e78bd79b
         'OpenTok\\' => 
         array (
             0 => __DIR__ . '/..' . '/opentok/opentok/src/OpenTok',
+        ),
+        'Midtrans\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/midtrans/midtrans-php/Midtrans',
         ),
         'MercadoPago\\' => 
         array (

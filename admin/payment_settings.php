@@ -57,6 +57,10 @@
   $dusupay_api_key = $row_payment_settings->dusupay_api_key;
   $dusupay_secret_key = $row_payment_settings->dusupay_secret_key;
 
+  $enable_midtrans = $row_payment_settings->enable_midtrans;
+  $midtrans_public_key = $row_payment_settings->midtrans_public_key;
+  $midtrans_secret_key = $row_payment_settings->midtrans_secret_key;
+
   $days = array("01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30");
   
 ?>
@@ -846,6 +850,50 @@
           </form>
           <!--- form Ends --->
         </div>
+        <div class="card-body">
+          <!--- card-body Starts --->
+          <form action="" method="post">
+            <!--- form Starts --->
+            <div class="form-group row">
+              <!--- form-group row Starts --->
+              <label class="col-md-3 control-label"> Enable Midtrans : </label>
+              <div class="col-md-6">
+                <select name="enable_paystack" class="form-control" required="">
+                  <?php if($enable_paystack == 'yes'){ ?>
+                  <option value="yes"> Yes </option>
+                  <option value="no"> No </option>
+                  <?php }elseif($enable_paystack == 'no'){ ?>
+                  <option value="no"> No </option>
+                  <option value="yes"> Yes </option>
+                  <?php } ?>
+                </select>
+                <small class="form-text text-muted">Allow users to pay and withdraw using Midtrans</small>
+              </div>
+            </div>
+            <div class="form-group row"><!--- form-group row Starts --->
+                <label class="col-md-3 control-label"> Midtrans Public Key : </label>
+                <div class="col-md-6">
+                    <input type="text" name="midtrans_public_key" class="form-control" value="<?= $midtrans_public_key; ?>">
+                </div>
+            </div>
+            <!--- form-group row Ends --->
+            <div class="form-group row"><!--- form-group row Starts --->
+                <label class="col-md-3 control-label"> Midtrans Secret Key : </label>
+                <div class="col-md-6">
+                    <input type="text" name="midtrans_secret_key" class="form-control" value="<?= $midtrans_secret_key; ?>">
+                </div>
+            </div>
+            <!--- form-group row Ends --->
+            <div class="form-group row">
+              <!--- form-group row Starts --->
+              <label class="col-md-3 control-label"> </label>
+              <div class="col-md-6">
+                <input type="submit" name="update_midtrans_settings" class="btn btn-success form-control" value="Update midtrans Settings">
+              </div>
+            </div><!--- form-group row Ends --->
+          </form>
+          <!--- form Ends --->
+        </div>
         <!--- card-body Ends --->
       </div>
       <!--- card mb-5 Ends -->
@@ -1168,6 +1216,17 @@ $(document).ready(function(){
     if($update_coinpayments_settings){
       $insert_log = $db->insert_log($admin_id,"paystack_settings","","updated");
       echo "<script>alert_success('Paystack Settings Updated Successfully!','index?payment_settings');</script>"; 
+
+    }
+  }
+
+  if(isset($_POST['update_midtrans_settings'])){
+    $data = $input->post();
+    unset($data['update_midtrans_settings']);
+    $update_coinpayments_settings = $db->update("payment_settings",$data);
+    if($update_coinpayments_settings){
+      $insert_log = $db->insert_log($admin_id,"midtrans_settings","","updated");
+      echo "<script>alert_success('Midtrans Settings Updated Successfully!','index?payment_settings');</script>"; 
 
     }
   }

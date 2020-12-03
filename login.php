@@ -8,6 +8,35 @@ if(isset($_SESSION['seller_user_name'])){
 	echo "<script> window.open('index','_self'); </script>";
 }
 
+if(isset($_POST['access'])) {
+	// print_r($_POST);
+	$url = "https://www.google.com/recaptcha/api/siteverify";
+	$data = [
+		'secret' => "6Lfd4-AZAAAAAFOm468xb7gnKunT7EoQq7HCtMAC",
+		'response' => $_POSTp['token'],
+		'remoteip' => $_SERVER['REMOTE_ADDR']
+	];
+
+	$option = array(
+		'http' => array(
+			'header' => "Content-type: application/
+				x-www-form-urlencoded\r\n",
+			'method' => 'POST',
+			'content' => http_build_query($data)
+		)
+	);
+
+	$context = stream_context_create($option);
+	$response = file_get_contents($url, false, $context);
+
+	$res = json_encode($response, true);
+	if ($res['success'] == true) {
+		echo "recaptcha berhasil";
+	} else {
+		echo "gagal recaptcha";
+	}
+}
+
 ?>
 <!DOCTYPE html>
 
@@ -34,9 +63,9 @@ if(isset($_SESSION['seller_user_name'])){
    <script type="text/javascript" src="js/ie.js"></script>
    <script type="text/javascript" src="js/sweat_alert.js"></script>
 	<script type="text/javascript" src="js/jquery.min.js"></script>
-	<!-- Load Librari Google reCaptcha nya -->
-	<script src='https://www.google.com/recaptcha/api.js'></script>
-
+	<script src="https://www.google.com/recaptcha/
+	api.js?render=6Lfd4-AZAAAAANmM4vzbC1sU5LndGKKp_wsabL-T"></script>
+	
 	<?php if(!empty($site_favicon)){ ?>
    	<link rel="shortcut icon" href="<?= $site_favicon; ?>" type="image/x-icon">
    <?php } ?>
@@ -78,7 +107,7 @@ if(isset($_SESSION['seller_user_name'])){
 				</div><!--- alert alert-danger Ends --->
 				<?php } ?>
 
-				<form action="g-capcha.php" method="post">
+				<form action="" method="post">
 
 					<div class="form-group">
 
@@ -94,7 +123,7 @@ if(isset($_SESSION['seller_user_name'])){
 
 	            <div class="form-group">
 
-						<div class="g-recaptcha" data-sitekey="6LeUBMoZAAAAAFd94DeMWJGLX_vH6dnaZe_F1XxM"></div>
+						
 
 						<input type="submit" name="access" class="btn btn-success btn-block" value="<?= $lang['button']['login']; ?>" required>
 				
@@ -265,6 +294,19 @@ if(isset($_SESSION['seller_user_name'])){
 
 <?php require_once("includes/footer.php"); ?>
 
+
+
+
 </body>
+
+<script>
+	grecaptcha.ready(function() {
+		grecaptcha.execute('6Lfd4-AZAAAAANmM4vzbC1sU5LndGKKp_wsabL-T', {
+			action: 'homepage'}).then(function(token) {
+				console.log(token);
+				document.getElementById("token").value = token;
+			});
+	});
+	</script>
 
 </html>
