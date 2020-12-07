@@ -188,11 +188,11 @@
 <script src="https://www.paypal.com/sdk/js?client-id=<?= $paypal_client_id; ?>&commit=true&disable-funding=credit,card"></script>
 
 <!-- midtrans javascript -->
-<script 
+<!-- <script 
       type="text/javascript"
       src="https://app.sandbox.midtrans.com/snap/snap.js"
       data-client-key="<?= $midtrans_public_key ?>"
-    ></script>
+    ></script> -->
 
 <?php if(!empty($site_favicon)){ ?>
 <link rel="shortcut icon" href="<?= $site_favicon; ?>" type="image/x-icon">
